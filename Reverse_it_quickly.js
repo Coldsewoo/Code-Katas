@@ -13,7 +13,7 @@ Because you are scared and stressed you have forgotten how to use the standard r
 */
 
 //weirdReverse = a => a.map((e, i, a) => a[a.length - i])
-answer =
+answer:
 weirdReverse=a=>a.sort(a=>1)
 
 var arr = weirdReverse([1, 2, 3, 4, 5])
