@@ -12,8 +12,9 @@ Because you are scared and stressed you have forgotten how to use the standard r
 #Output: [[],'c','b','a',3,2,1]
 */
 
-weirdReverse = a => a.map((e, i, a) => a[a.length - i])
+//weirdReverse = a => a.map((e, i, a) => a[a.length - i])
+answer =
+weirdReverse=a=>a.sort(a=>1)
 
-
-var arr = weirdReverse([1, 2, 3, 4, 5]) //?
+var arr = weirdReverse([1, 2, 3, 4, 5])
 
