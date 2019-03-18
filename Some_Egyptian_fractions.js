@@ -38,11 +38,25 @@ Ref: http://en.wikipedia.org/wiki/Egyptian_fraction
 */
 
 function decompose(n) {
+  if (n == 0) return [];
   let result = [];
   const mod = (x, num) => ((x % num) + num) % num;
   let fraction = n;
-  if (fraction.toString().indexOf('/') === -1) fraction = getFraction(fraction);
-  else fraction = fraction.toString().split('/');
+  let integerPart;
+  if (fraction.toString().indexOf('/') === -1) {
+    if (fraction.toString().indexOf('.') === -1) return [fraction.toString()];
+    fraction = getFraction(fraction);
+  } else {
+    fraction = getGCD(fraction.toString().split('/'));
+    if (fraction[0] == 0) return [];
+    if (parseInt(fraction[0]) > parseInt(fraction[1])) {
+      integerPart = Math.floor(eval(n));
+      if (fraction[1] === 1) return [integerPart.toString()];
+      fraction[0] -= Math.floor(eval(n)) * fraction[1];
+    }
+  }
+
+  if (fraction[0] === 1) return integerPart ? [integerPart.toString(), fraction.join('/')] : [fraction.join('/')];
   let numberOne = [1, Math.ceil(fraction[1] / fraction[0])];
   let numberTwo = getGCD([mod(-Number(fraction[1]), Number(fraction[0])), fraction[1] * Math.ceil(fraction[1] / fraction[0])]);
   result.push(numberOne);
@@ -60,19 +74,20 @@ function decompose(n) {
     return prev;
   }, [0]);
   if (result[0] === 0) return result.slice(1);
+  if (integerPart) result.unshift(integerPart.toString);
   return result;
 
-
   function getFraction(number) {
-    const numStr = number.toString();
-    const raw = numStr.slice(numStr.indexOf('.') + 1, numStr.length);
-    let result = [parseInt(raw), 10 ** raw.length]; //?
+    const numStr = number.toString(); //?
+    const raw = numStr.split('.'); //?
+    let result = [parseInt(raw[1]), 10 ** raw[1].length];
+    if (parseInt(raw[0]) > 0) integerPart = parseInt(raw[0]);
     return getGCD(result);
   }
 
   function getGCD(list) {
     const result = [];
-    list.forEach(item => result.push(findDividers(item)));
+    list.forEach(item => result.push(findDividers(parseInt(item))));
     const array = [];
     for (const key in result[0]) {
       if (result[1][key]) array.push([Number(key), Math.min(result[0][key], result[1][key])])
@@ -100,5 +115,5 @@ function decompose(n) {
     }
   }
 }
-decompose('3/4'); // ?
+decompose(0.9); // ?
 // "1/2", "1/7", "1/59", "1/5163", "1/53307975"
