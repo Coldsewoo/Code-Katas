@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 // 6 kyu
 
 /*
@@ -6,12 +7,25 @@ You live in the city of Cartesia where all roads are laid out in a perfect grid.
 Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
 */
 
-function isValidWalk(walk) {
-  if (walk.length !== 10) return false;
-  walk.remove(9).remove(3) //?
-  walk.remove(8) //?
   Array.prototype.remove = function(n) {
     return this.slice(0,n).concat(this.slice(n+1))
   }
+
+function isValidWalk(walk) {
+  if (walk.length !== 10) return false;
+  const toOrigin = {
+    n : 's',
+    s : 'n',
+    e : 'w',
+    w : 'e',
+  };
+  while (walk.length > 0) {
+    let index = walk.indexOf(toOrigin[walk[0]]);
+    if (index === -1) return false;
+    walk = walk.remove(0).remove(index - 1);
+  }
+  return true;
 }
-isValidWalk(['1','2','3','4','5','6','7','8','9','10']) // ?
+
+
+isValidWalk([ 'n', 's', 'n', 's', 'n', 's', 'n', 's', 'n', 's' ])
