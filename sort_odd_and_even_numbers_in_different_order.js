@@ -21,3 +21,32 @@ const sortArray = (array) => {
   const evenArrSorted = arr.filter(e => !(e & 1)).sort((a, b) => b - a);
   return arr.map(e => (e & 1 ? oddArrSorted.shift() : evenArrSorted.shift()));
 };
+
+
+// const arr1 = [5, 3, 2, 8, 1, 0, 4];
+
+// const sortOddEv = (array) => {
+//   const arr = [...array];
+//   const arrLen = arr.length;
+
+//   for (let i = 0; i < arrLen - 1; i++) {
+//     let minIdx_even = i;
+//     let minIdx_odd = i;
+
+//     for (let j = i + 1; j < arrLen; j++) {
+//       if (arr[i] & 1) {
+//         if (arr[j] < arr[minIdx_odd] && arr[j] & 1) minIdx_odd = j;
+//       }
+//       else {
+//         if(arr[j] > arr[minIdx_even] && !(arr[j] & 1)) minIdx_even = j
+//       }
+//     }
+//     arr[i] & 1
+//       ? [arr[minIdx_odd], arr[i]] = [arr[i], arr[minIdx_odd]]
+//       : [arr[minIdx_even], arr[i]] = [arr[i], arr[minIdx_even]];
+//   }
+
+//   console.log(arr);
+// };
+
+// sortOddEv(arr1);
